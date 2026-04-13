@@ -1,0 +1,179 @@
+{#
+  Deadlinks Confirmation Template
+
+  Available variables (all scoped under `deadlinks` object):
+    - deadlinks.url                    (string)      The dead link URL
+    - deadlinks.linkStatus             (LinkStatus)  Full link status model (or null)
+    - deadlinks.archiveUrl             (string|null) Wayback Machine archive URL if found
+    - deadlinks.archiveChecked         (bool|null)   Whether archive lookup is complete
+    - deadlinks.archiveCheckInProgress (bool)        Whether archive lookup is in progress
+    - deadlinks.waybackSearchUrl       (string)      URL to search Wayback Machine manually
+
+  To use a custom template, set `confirmationTemplate` in config/deadlinks.php:
+    return ['confirmationTemplate' => '_partials/deadlink-confirmation'];
+#}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Link Unavailable</title>
+    <style>
+        body {
+            max-width: 600px;
+            margin: 80px auto;
+            padding: 0 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: rgba(50,50,50,1);
+        }
+
+        a {
+            color: rgba(50,50,50,1);
+            text-decoration-color: rgba(50,50,50,0.5);
+            transition: all 0.2s;
+        }
+
+        a:hover,
+        a:focus {
+            color: #000;
+            text-decoration-color: inherit;
+        }
+
+        .container {
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 4px;
+        }
+
+        h1 {
+            margin-top: 0;
+            text-align: left;
+            font-size: 24px;
+            color: #dc3545;
+        }
+
+        .status-message {
+            margin: 20px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 4px;
+        }
+
+        .url-display {
+            margin: 15px 0;
+            padding: 10px;
+            background: #e9ecef;
+            border-radius: 3px;
+            word-break: break-all;
+            font-family: monospace;
+        }
+
+        .options {
+            margin-top: 30px;
+        }
+
+        .options h2 {
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .option-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-list li {
+            margin: 10px 0;
+        }
+
+        .archive-status {
+            margin: 20px 0;
+            padding: 5px 15px;
+            border-radius: 4px;
+        }
+
+        .archive-status--positive {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            color: #155724;
+        }
+
+        .archive-status--positive a {
+            color: rgba(21,87,36);
+            font-weight: bold;
+            text-decoration-color: rgba(21,87,36,0.4);
+        }
+
+        .archive-status--positive a:hover,
+        .archive-status--positive a:focus {
+            text-decoration-color: inherit;
+        }
+
+        .archive-status--negative {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            color: #721c24;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Link Unavailable</h1>
+
+        <div class="status-message">
+            <p>The link you clicked appears to be unavailable or has been removed.</p>
+
+            <div class="url-display">
+                {{ deadlinks.url }}
+            </div>
+        </div>
+
+        {# Check complete, archive found #}
+        {% if deadlinks.archiveUrl %}
+            <div class="archive-status archive-status--positive">
+                <p><strong>We found an archived version of this page.</strong></p>
+                <p>
+                    <a href="{{ deadlinks.archiveUrl }}">
+                        View Archived Version
+                    </a>
+                </p>
+            </div>
+        {% endif %}
+
+        {# Check complete, archive not found #}
+        {% if deadlinks.archiveChecked and not deadlinks.archiveUrl %}
+        <div class="archive-status archive-status--negative">
+            <p><strong>No archived version could be found</strong></p>
+            <p>The Internet Archive doesn't have a saved copy of this page.</p>
+        </div>
+        {% endif %}
+
+        <div class="options">
+            <ul class="option-list">
+                {# Show archive search if no archive found #}
+                {% if not deadlinks.archiveUrl %}
+                    <li>
+                        <a href="{{ deadlinks.waybackSearchUrl }}">
+                            Search Internet Archive
+                        </a>
+                    </li>
+                {% endif %}
+
+                <li>
+                    <a href="{{ deadlinks.url }}">
+                        Try Original Link
+                    </a>
+                </li>
+
+                <li>
+                    <a href="javascript:history.back()">
+                        Go Back
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

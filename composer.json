@@ -1,0 +1,59 @@
+{
+  "name": "simplygoodwork/craft-deadlinks",
+  "description": "Fight link rot by automatically redirecting broken links to their archived versions.",
+  "type": "craft-plugin",
+  "keywords": [
+    "craft",
+    "cms",
+    "craftcms",
+    "craft-plugin",
+    "expired",
+    "dead",
+    "rot",
+    "links",
+    "redirect",
+    "wayback",
+    "archive"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Good Work",
+      "homepage": "https://simplygoodwork.com"
+    }
+  ],
+  "support": {
+    "email": "hello@simplygoodwork.com",
+    "issues": "https://github.com/simplygoodwork/craft-deadlinks/issues?state=open",
+    "source": "https://github.com/simplygoodwork/craft-deadlinks",
+    "docs": "https://github.com/simplygoodwork/craft-deadlinks/blob/main/README.md",
+    "rss": "https://github.com/simplygoodwork/craft-deadlinks/releases.atom"
+  },
+  "require": {
+    "php": ">=8.2",
+    "craftcms/cms": "^5.3.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "simplygoodwork\\deadlinks\\": "src/"
+    }
+  },
+  "extra": {
+    "name": "Deadlinks",
+    "handle": "deadlinks",
+    "developer": "Good Work",
+    "developerUrl": "https://simplygoodwork.com",
+    "documentationUrl": "https://github.com/simplygoodwork/craft-deadlinks",
+    "class": "simplygoodwork\\deadlinks\\Deadlinks"
+  },
+  "config": {
+    "sort-packages": true,
+    "platform": {
+      "php": "8.2"
+    },
+    "allow-plugins": {
+      "yiisoft/yii2-composer": true,
+      "craftcms/plugin-installer": true
+    }
+  }
+}
