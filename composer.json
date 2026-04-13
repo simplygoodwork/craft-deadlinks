@@ -2,6 +2,7 @@
   "name": "simplygoodwork/craft-deadlinks",
   "description": "Fight link rot by automatically redirecting broken links to their archived versions.",
   "type": "craft-plugin",
+  "version": "1.0.0",
   "keywords": [
     "craft",
     "cms",
