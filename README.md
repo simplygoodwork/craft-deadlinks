@@ -72,7 +72,7 @@ You can use the following variables:
 - CheckLink finished, CheckArchive finished and archive not found or error → point URL to confirmation screen with 'no archive available' message
 - Link statuses are stored in `deadlinks_links` DB table so they don’t get re-checked unless needed. If there's a definitive status (archive found/archive not available) then that is used. If there's no definitive status (e.g. error or timeout during last test) then link is checked again.
 - CLI commands:
-- - `craft deadlinks/default/stats' shows how many links checked and their status
+- - `craft deadlinks/default/stats` shows how many links checked and their status
 - - `craft deadlinks/default/clear-all` clears all saved link statuses
 
 ---
